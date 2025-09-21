@@ -8,69 +8,41 @@ npm run dev
 ```
 
 แล้วเข้าไปที่
-
 ```
 localhost:3000
 ```
 
-Server.js เป็นส่วนของ page ไปได้ทั้งหมดใน server นี้ โดยมี <br />
-/home,/dragon,/phonix,/owl เป็นหน้า page html ใช้ในการแสดงผล<br />
-/css สำหรับ ไฟล์ css <br />
-/pets เป็น Routes ขอ api ในระบบนี้<br />
-
-ใน Files routes/petRoutes.js <br />
-จะมี api ต่างๆในการรับข้อมูลไฟล์ โดยมี <br />
-GET API <br />
-/allpet เพื่อรับ json ของ pet ทั้งหมดที่มี <br />
-/findpet/:type เป็นตัวเลือกให้สามารถเลือกดูเฉพาะ typeๆ นั้นได้ <br />
-/findpetbyid/:type/:id มีไว้สำหรับหาโดย id ของ pet <br />
-/rejected สำหรับดูไฟล์ Rejected ที่มีข้อมูลสัตว์ที่ถูก Rejected <br />
-/rejected/:type เลือกดูเฉพาะ typeๆ นั้น <br />
-
-POST API<br />
-/addpet เป็นapi ให้รับ pet ใหม่ๆเข้ามา <br />
-
-โดยเมื่อ API เหล่านี้ถูกใช้จะมาที่ petController.js เป็นตัวกลางรับ request จาก user<br />
-Method<br />
-getAllPet <br />
-getPetsByType มีการแปลง type ที่เข้ามาเป็นตัวเล็กเพื่อให้นำไปหาง่าย<br />
-getPetById<br />
-getAllRejectedPets<br />
-getRejectedPetsByType<br />
-
-addPet จะ check type ของ type ก่อน และ input body เป็น json โครงสร้างดังนี้<br />
-
-```json
-{
-  "type": "phoenix",
-  "healthDate": "15/11/2024",
-  "vaccineCount": 3,
-  "additionalInfo": true
-}
+Page 
+```
+/candidatelist
+/candidatedetail/:id
+/openposition
+/applyjob/:id
+```
+API
+```
+/allcandidate/
+/candidatedetail/:id
+/joblist
+/jobdetail/:id
+/applyjob
 ```
 
-แล้ว check แยก case ของสัตว์แต่ละประเภทเพื่อแปลง "additionalInfo": true ให้ตรงกับความต้องการของประเภทสัตว์นั้นๆ <br />
-phoenix => newPet.fireproof_certificate = true;<br />
-groudon => newPet.smoke_pollution_level = pollutionLevel;<br />
-owl => newPet.flight_distance_without_food = flightDistance;<br />
-แล้วทำการเข้าไป addpet ต่อไปในส่วนของ model<br />
+A.
+MVC
+ใน Folder models จะเป็นไฟล์ที่จัดการเกี่ยวกับข้อมูลที่เก็บและ logic ที่ใช้จัดการกับ data และส่งข้อมูลที่มีกลับไปให้ controllers
+ใน Folder controllers เป็นตัวเชื่อมระหว่าง routes และ Model ที่รับ request จากผู้ใช้งานและส่งกลับข้อมูลที่ได้หรือ error กลับคืน
+routes เป็นเส้น API ที่ให้ผู้ใช้เรียกใช้งาน controllers 
+ใน Folder Views เป็นสิ่งที่ผู้ใช้เห็น server.js เป็น routes ของแต่ละหน้า page ต่างๆเป็น HTML และมีเส้น /api สำหรับเรียกใช้ API ใน routes เพื่อใช้งาน controller function
 
-petModel.js เป็นส่วนที่เข้าถึง database Insert,Update,Delete<br />
-โดยมี path ต่างของ database ทั้งหมด<br />
-readJSON อ่านไฟล์ผ่าน path<br />
-getAllPets รวมไฟล์ทั้งหมดแล้ว return<br />
-filePath รวม path ให้เป็น array <br />
-getPetsByType เอา filePath มาให้แยก type ได้<br />
-getPetById เอา type กับ id มาหาข้อมูล pet ตัวนั้น<br />
-getFilePathByPetType method ใช้ type แยก path <br />
-generatePetId จะสร้าง uniqueID 8 หลักเสมอโดยเอา Math.random()\* 90000000 จะเอา ค่า Random ระหว่า 0-1 มาคูณให้ เลขไม่เกิน 8 หลัก แล้วมา + 10000000 จะทำให้ได้8 หลักเสมอ<br />
-ถ้าหาgenerate มาแล้วจะ check เทียบกับ ID ทั้งหมดก่อน แล้วถ้าซ้ำจะวนวร้างใหม่<br />
-addNewPet check ข้อมูลตามเกณฑที่ได้กำหนดถ้าไม่ถึงให้ save เข้า rejected<br />
-ถ้าผ่านก็ save เข้า database ของสัตว์นั้นๆ<br />
-saveRejectedPet<br />
-getRejectedPets<br />
-getRejectedPetsByType<br />
+B. สรุป Routes/Action
+Nav Bar ใช้งานไม่ได้
 
-corsOptions.js สำหรับ method ที่ allow ในการใช้งาน ปรับให้ใช้ได้ทั้งหมด<br />
+/candidatelist แสดงผู้สมัครทั้งหมดผ่าน /api/allcandidate โดยเรียงตามชื่อ มีปุ่ม View เพื่อดูลายละเอียดผู้สมัครคนนั้น
 
-test
+/candidatedetail/:id แสดงรายละเอียดผู้สมัครผ่าน /api/candidatedetail/:id โดยจะนำ id นั้นๆไปใช้ในสอง function เพื่อดึงข้อมูลผู้สมัครและดูตำแหน่งที่สมัครและนำ JobID ไปค้นหาบริษัทที่เปิดตำแหน่งนั้นๆ มาแสดง
+/openposition แสดงต่ำแหน่งที่เปิดทั้งหมดโดยทุกบริษัท แสดงตำแหน่ง คำอธิบาย ชื่อบริษัท วันสุดท้ายที่สมัครได้ ผ่าน /api/joblist ดึงข้อมูลงานที่มีอยู่ทั้งหมดและนำ JobID ไปค้นหาบริษัทที่เปิดตำแหน่งนั้นๆ มาแสดง
+มีปุ่มสำหรับสมัครงานเป็นการ redirect ไปยัง /applyjob/:id
+/applyjob/:id ดึงข้อมูลงาน /api/jobdetail/:id นำ jobID ไปหาข้อมูลบริษัทมาแสดงพร้อมกับข้อมูลงาน มีปุ่ม Apply for this Job เพื่อส่ง Post request สมัครงานนั้นๆ จะมีการครวจสอบใน request นั้นๆว่ามี candidateID,jobID ไม่ใช่การสมัครซ้ำและดูวันที่สมัครเกิน deadline หรือไม่ถึงจะสมัครได้
+
+
