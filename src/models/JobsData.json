@@ -1,0 +1,16 @@
+[
+  {
+    "jobId": 20000001,
+    "jobTitle": "Software Engineer",
+    "jobDescription": "Develop and maintain web applications.",
+    "companyId": 10000001,
+    "deadline": "2025-10-31"
+  },
+  {
+    "jobId": 20000002,
+    "jobTitle": "UI/UX Designer",
+    "jobDescription": "Design user-friendly interfaces.",
+    "companyId": 10000002,
+    "deadline": "2025-11-15"
+  }
+]
