@@ -75,7 +75,7 @@
             <td>${job.jobDescription}</td>
             <td>${job.companyName}</td>
             <td>${job.deadline}</td>
-            <td><button onclick="alert('You clicked to apply for ${job.jobTitle}')">Apply</button></td>
+            <td><button onclick="window.location.href='/applyjob/${job.jobId}'"> Apply</button></td>
           `;
                 jobListTable.appendChild(row);
               });

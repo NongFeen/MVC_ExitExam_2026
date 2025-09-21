@@ -11,12 +11,12 @@ app.use(express.json());
 
 app.use("/api", jobFairRoutes);
 
-app.get("/home", (req, res) => {
-  //main page
-  res.sendFile(path.join(__dirname, "views", "index.html"));
-});
+// app.get("/home", (req, res) => {
+//   //main page
+//   res.sendFile(path.join(__dirname, "views", "index.html"));
+// });
 app.get("/", (req, res) => {
-  res.redirect("/home");
+  res.redirect("/openposition");
 });
 app.get("/candidatelist", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "candidatelist.html"));
