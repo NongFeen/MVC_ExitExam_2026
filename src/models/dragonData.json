@@ -1,0 +1,72 @@
+[
+  {
+    "pet_id": 23456789,
+    "pet_type": "dragon",
+    "last_health_check": "15/11/2024",
+    "vaccines_received": 5,
+    "smoke_pollution_level": 65
+  },
+  {
+    "pet_id": 98765432,
+    "pet_type": "dragon",
+    "last_health_check": "20/01/2025",
+    "vaccines_received": 4,
+    "smoke_pollution_level": 50
+  },
+  {
+    "pet_id": 17319071,
+    "pet_type": "dragon",
+    "last_health_check": "15/11/2024",
+    "vaccines_received": 4,
+    "smoke_pollution_level": 65
+  },
+  {
+    "pet_type": "dragon",
+    "last_health_check": "15/11/2024",
+    "vaccines_received": 4,
+    "smoke_pollution_level": 65,
+    "pet_id": 14542977
+  },
+  {
+    "pet_type": "dragon",
+    "last_health_check": "15/11/2024",
+    "vaccines_received": 4,
+    "smoke_pollution_level": 65,
+    "pet_id": 62443791
+  },
+  {
+    "pet_type": "dragon",
+    "last_health_check": "2025-02-05",
+    "vaccines_received": 10,
+    "smoke_pollution_level": 12,
+    "pet_id": 90949391
+  },
+  {
+    "pet_type": "dragon",
+    "last_health_check": "2025-02-03",
+    "vaccines_received": 10,
+    "smoke_pollution_level": 12,
+    "pet_id": 84072510
+  },
+  {
+    "pet_type": "dragon",
+    "last_health_check": "2025-02-05",
+    "vaccines_received": 123,
+    "smoke_pollution_level": 30,
+    "pet_id": 51460349
+  },
+  {
+    "pet_type": "dragon",
+    "last_health_check": "15/11/2024",
+    "vaccines_received": 4,
+    "smoke_pollution_level": 65,
+    "pet_id": 70667517
+  },
+  {
+    "pet_type": "dragon",
+    "last_health_check": "2025-02-12",
+    "vaccines_received": 1,
+    "smoke_pollution_level": 23,
+    "pet_id": 72354397
+  }
+]

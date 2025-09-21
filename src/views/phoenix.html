@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phoenix School</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <nav>
+        <div>
+            <ul>
+                <li><a href="home">Home</a></li>
+                <li><a href="dragon">Dragon School</a></li>
+                <li><a href="phoenix" class="active">Phoenix School</a></li>
+                <li><a href="owl">Owl School</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="title">
+            <h1>Phoenix School</h1>
+            <p>Learn all about phoenix care and maintenance.</p>
+        </section>
+
+        <section class="summary">
+            <h2>Pet Data Summary</h2>
+            <p>Accepted Pets: <span id="accepted-count">0</span></p>
+            <p>Rejected Pets: <span id="rejected-count">0</span></p>
+        </section>
+
+        <!-- Add Pet Form -->
+        <section class="add-pet-form">
+            <h2>Add a New Pet</h2>
+            <form id="add-pet-form">
+                
+                <label for="healthDate">Health Date:</label>
+                <input type="date" id="healthDate" required>
+
+                <label for="vaccineCount">Vaccine Count:</label>
+                <input type="number" id="vaccineCount" required>
+
+                <label for="additionalInfo">Fireproof Certificate:</label>
+                <input type="checkbox" id="additionalInfo" required> (Check if true)
+
+                <button type="submit">Add Pet</button>
+            </form>
+            <p id="status-message"></p>
+        </section>
+
+        <!-- Accepted Phoenix Pets Table -->
+        <section class="pet-table">
+            <h2>Accepted Phoenix Pets</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Pet ID</th>
+                        <th>Last Health Check</th>
+                        <th>Vaccines Received</th>
+                        <th>Fireproof Certificate</th>
+                    </tr>
+                </thead>
+                <tbody id="accepted-phoenix-list">
+                    <!-- Accepted phoenix data will be populated here -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Rejected Phoenix Pets Table -->
+        <section class="pet-table">
+            <h2>Rejected Phoenix Pets</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Pet ID</th>
+                        <th>Rejected Reason</th>
+                    </tr>
+                </thead>
+                <tbody id="rejected-phoenix-list">
+                    <!-- Rejected phoenix data will be populated here -->
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+
+    <a href="#" class="scroll-top">↑</a>
+
+    <footer>
+        <p>© 2025 Feen. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Fetch accepted phoenix pets data
+            fetch('/pets/findpet/phoenix')
+                .then(response => response.json())
+                .then(data => {
+                    const acceptedphoenixList = document.getElementById('accepted-phoenix-list');
+                    const acceptedCount = document.getElementById('accepted-count');
+                    let accepted = 0;
+
+                    data.forEach(pet => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${pet.pet_id}</td>
+                            <td>${pet.last_health_check}</td>
+                            <td>${pet.vaccines_received}</td>
+                            <td>${pet.fireproof_certificate}</td>
+                        `;
+                        acceptedphoenixList.appendChild(row);
+                        accepted++;
+                    });
+
+                    // Update the accepted pets count
+                    acceptedCount.textContent = accepted;
+                })
+                .catch(error => {
+                    console.error('Error fetching accepted phoenix data:', error);
+                });
+
+            // Fetch rejected phoenix pets data
+            fetch('/pets/rejected/phoenix')
+                .then(response => response.json())
+                .then(data => {
+                    const rejectedphoenixList = document.getElementById('rejected-phoenix-list');
+                    const rejectedCount = document.getElementById('rejected-count');
+                    let rejected = 0;
+
+                    data.forEach(pet => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${pet.pet_id}</td>
+                            <td>${pet.rejected_reason}</td>
+                        `;
+                        rejectedphoenixList.appendChild(row);
+                        rejected++;
+                    });
+
+                    // Update the rejected pets count
+                    rejectedCount.textContent = rejected;
+                })
+                .catch(error => {
+                    console.error('Error fetching rejected phoenix data:', error);
+                });
+
+            // Handle the form submission for adding a new pet
+            document.getElementById('add-pet-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                // Get the form data
+                const petData = {
+                    type: "phoenix", // Hardcoded since it's for Phoenix only
+                    healthDate: document.getElementById('healthDate').value,
+                    vaccineCount: parseInt(document.getElementById('vaccineCount').value),
+                    additionalInfo: document.getElementById('additionalInfo').checked // Use checkbox value
+                };
+
+                // Send the data to the API
+                fetch('/pets/addpet', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(petData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === "Pet added successfully") {
+                        document.getElementById('status-message').textContent = 'Pet added successfully!';
+                        document.getElementById('add-pet-form').reset(); // Reset form fields
+                    } else {
+                        document.getElementById('status-message').textContent = 'Failed to add pet.';
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('status-message').textContent = 'Error adding pet.';
+                    console.error('Error adding pet:', error);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
